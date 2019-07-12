@@ -1,0 +1,58 @@
+.container {
+	max-width: 1000px;
+	width: 100%;
+	margin: 0 auto;
+	padding: 10px 15px;
+	color: #000;
+}
+
+p {
+	font-size: 20px;
+	text-align: center;
+}
+
+.canvas {
+	// width: 100%;
+	display: block;
+	margin: 20px auto 10px;
+}
+
+.btn-list {
+	display: flex;
+	justify-content: center;
+}
+
+.btn-item {
+
+	&:nth-child(n+2) {
+		margin-left: 10px;
+	}
+
+	span {
+		display: inline-block;
+		cursor: pointer;
+		padding: 5px 15px;
+		border: 1px solid #000;
+	}
+}
+
+label {
+	display: block;
+}
+
+input[type="file"] {
+	display: none;
+}
+
+.box-img {
+	margin-top: 30px;
+
+	img {
+		display: block;
+		max-height: 800px;
+		
+		&:nth-child(n+2) {
+		   margin-top: 20px;
+		}
+	}
+}

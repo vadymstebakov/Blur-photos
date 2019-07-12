@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Blur editor</title>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+	<meta name="format-detection" content="telephone=no">
+
+	<!-- Favicon -->
+	<link rel="icon" href="img/favicon/favicon.ico">
+	<link rel="apple-touch-icon" sizes="180x180" href="img/favicon/apple-touch-icon-180x180.png">
+
+	<!-- Style -->
+	<link rel="stylesheet" href="css/style.css">
+
+	<!-- Scripts -->
+	<script src="js/libs.min.js" defer></script>  
+	<script src="js/script.js" defer></script>    
+</head>
+<body>
+	<div class="container">
+		<p>Use your mouse or finger (if you have a touch device) control the blur photo.</p>
+		<canvas id="canvas" class="canvas"></canvas>
+		<ul class="btn-list">
+			<!-- <li class="btn-item">
+				<label>
+					<input id="upload" type="file">
+					<span>Upload image</span>
+				</label>
+			</li> -->
+			<li class="btn-item">
+				<span id="save">Save image</span>
+			</li>
+			<li class="btn-item">
+				<span id="reset">Reset</span>
+			</li>
+		</ul>
+		<div id="box-img" class="box-img"></div>
+	</div>
+</body>
+</html>
