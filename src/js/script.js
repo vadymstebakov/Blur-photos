@@ -37,13 +37,13 @@ document.addEventListener('DOMContentLoaded', function() {
 				return false;
 			};
 
-			if ('ontouchstart' in document.documentElement) alert('It a touch screen device.');
+			if ('ontouchstart' in window || navigator.msMaxTouchPoints) alert('It a touch screen device.');
 			else alert('Others devices');
 
 			
 			const blurMove = function(e) {
 				if (drag) {
-					if ('ontouchstart' in document.documentElement) {
+					if ('ontouchstart' in window || navigator.msMaxTouchPoints) {
 						rect.w = (e.changedTouches[0].pageX - this.offsetLeft) - rect.startX;
 						rect.h = (e.changedTouches[0].pageY - this.offsetTop) - rect.startY;
 					} else {
@@ -71,7 +71,7 @@ document.addEventListener('DOMContentLoaded', function() {
 			};
 
 			const startBlur = function(e) {
-				if ('ontouchstart' in document.documentElement) {
+				if ('ontouchstart' in window || navigator.msMaxTouchPoints) {
 					rect.startX = e.changedTouches[0].pageX - this.offsetLeft;
 					rect.startY = e.changedTouches[0].pageY - this.offsetTop;
 				} else {
@@ -82,17 +82,21 @@ document.addEventListener('DOMContentLoaded', function() {
 			};
 
 			const endBlur = function() {
+				img.src = canvas.toDataURL();
 				drag = false;
 			};
 
 			const saveImg = function() {
 				let newImg = new Image();
+				let oldImg = wrapImg.getElementsByTagName('img')[0];
+
+				if (oldImg != undefined) wrapImg.removeChild(oldImg);
 				newImg.src = canvas.toDataURL();
 				wrapImg.appendChild(newImg);
 			};
 
 			const startReset = function() {
-				filter.reset();
+				img.src = '../img/чек-mini.jpg';
 				ctx.drawImage(img, 0, 0);
 			};
 
@@ -103,6 +107,7 @@ document.addEventListener('DOMContentLoaded', function() {
 			canvas.addEventListener('mousemove', blurMove, false);
 			canvas.addEventListener('touchmove', blurMove, false);
 			btnReset.addEventListener('click', startReset, false);
+			btnSave.addEventListener('click', saveImg, false);
 
 		} catch(err) {
 			ctx.fillStyle = '#000';
