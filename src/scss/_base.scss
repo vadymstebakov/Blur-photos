@@ -11,13 +11,41 @@ p {
 	text-align: center;
 }
 
-.canvas {
-	// width: 100%;
-	display: block;
+.canvas-inner {
+	max-width: 100%;
+	max-height: 500px;
+	overflow: scroll;
 	margin: 20px auto 10px;
 }
 
+.canvas {
+	// width: 100%;
+	display: block;
+	margin: 0 auto;
+}
+
+.list-arrow {
+	display: flex;
+	justify-content: center;
+	margin-top: 5px;
+
+	li {
+
+		&:nth-child(n+2) {
+			margin-left: 5px;
+		}
+	}
+}
+
+.scrollto {
+	text-align: center;
+	display: inline-block;
+	background-color: #0ff;
+	padding: 10px;
+}
+
 .btn-list {
+	margin-top: 15px;
 	display: flex;
 	justify-content: center;
 }
@@ -52,6 +80,8 @@ input[type="file"] {
 
 	img {
 		display: block;
+		width: auto;
+		height: auto;
 		max-height: 800px;
 	}
 }

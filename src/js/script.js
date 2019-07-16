@@ -6,13 +6,16 @@ document.addEventListener('DOMContentLoaded', function() {
 	(function blurFn() {
 		let canvas = document.getElementById('canvas');
 		let ctx = canvas.getContext('2d');
+		let parentCanvas = canvas.parentElement;
 		let btnSave = document.getElementById('save');
 		// let btnUpload = document.getElementById('upload');
 		let btnReset = document.getElementById('reset');
 		let wrapImg = document.getElementById('box-img');
+		let wrapArrows = document.querySelector('.list-arrow');
 		const rect = {};
 		let drag = false;
 		let img = null;
+		let src = '../img/чек-mini.jpg';
 		let imgData, filteredImage, rw, rh;
 
 		ctx.textAlign = 'center';
@@ -31,7 +34,7 @@ document.addEventListener('DOMContentLoaded', function() {
 				ctx.drawImage(img, 0, 0);
 			};
 
-			img.src = '../img/чек-mini.jpg';
+			img.src = src;
 
 			canvas.ondragstart = function() {
 				return false;
@@ -44,15 +47,16 @@ document.addEventListener('DOMContentLoaded', function() {
 			const blurMove = function(e) {
 				if (drag) {
 					if ('ontouchstart' in window || navigator.msMaxTouchPoints) {
-						rect.w = (e.changedTouches[0].pageX - this.offsetLeft) - rect.startX;
-						rect.h = (e.changedTouches[0].pageY - this.offsetTop) - rect.startY;
+						e.preventDefault();
+						rect.w = (e.changedTouches[0].pageX - this.offsetLeft + this.parentNode.scrollLeft) - rect.startX;
+						rect.h = (e.changedTouches[0].pageY - this.offsetTop + this.parentNode.scrollTop) - rect.startY;
 					} else {
-						rect.w = (e.pageX - this.offsetLeft) - rect.startX;
-						rect.h = (e.pageY - this.offsetTop) - rect.startY;
+						rect.w = (e.pageX  - this.offsetLeft + this.parentNode.scrollLeft) - rect.startX;
+						rect.h = (e.pageY  - this.offsetTop + this.parentNode.scrollTop) - rect.startY;
 					}
 					if (rect.w === 0 || rect.h === 0) return;
 					filter.reset();
-					filter.addFilter('blur', 20);
+					filter.addFilter('blur', 50);
 					filteredImage = filter.apply(img);
 					ctx.drawImage(filteredImage, 0, 0);
 					ctx.lineWidth = 1;
@@ -72,11 +76,12 @@ document.addEventListener('DOMContentLoaded', function() {
 
 			const startBlur = function(e) {
 				if ('ontouchstart' in window || navigator.msMaxTouchPoints) {
-					rect.startX = e.changedTouches[0].pageX - this.offsetLeft;
-					rect.startY = e.changedTouches[0].pageY - this.offsetTop;
+					e.preventDefault();
+					rect.startX = e.changedTouches[0].pageX - this.offsetLeft + this.parentNode.scrollLeft;
+					rect.startY = e.changedTouches[0].pageY - this.offsetTop + this.parentNode.scrollTop;
 				} else {
-					rect.startX = e.pageX - this.offsetLeft;
-					rect.startY = e.pageY - this.offsetTop;
+					rect.startX = e.pageX  - this.offsetLeft + this.parentNode.scrollLeft;
+					rect.startY = e.pageY  - this.offsetTop + this.parentNode.scrollTop;
 				}
 				drag = true;
 			};
@@ -96,18 +101,45 @@ document.addEventListener('DOMContentLoaded', function() {
 			};
 
 			const startReset = function() {
-				img.src = '../img/чек-mini.jpg';
+				img.src = src;
 				ctx.drawImage(img, 0, 0);
+			};
+
+			const scrollTo = function(e) {
+				e.preventDefault();
+				let target = e.target;
+
+				while(target != wrapArrows) {
+
+					switch (target.id) {
+					case 'left':
+						parentCanvas.scrollLeft += 50;
+						return;
+					case 'right':
+						parentCanvas.scrollLeft -= 50;
+						return;
+					case 'bottom':
+						parentCanvas.scrollTop += 50;
+						return;
+					case 'top':
+						parentCanvas.scrollTop -= 50;
+						return;
+					}
+				}
+
+				target = target.parentNode;
 			};
 
 			canvas.addEventListener('mousedown', startBlur, false);
 			canvas.addEventListener('touchstart', startBlur, false);
 			canvas.addEventListener('mouseup', endBlur, false);
+			canvas.addEventListener('touchend', endBlur, false);
 			canvas.addEventListener('mouseout', endBlur, false);
 			canvas.addEventListener('mousemove', blurMove, false);
 			canvas.addEventListener('touchmove', blurMove, false);
 			btnReset.addEventListener('click', startReset, false);
 			btnSave.addEventListener('click', saveImg, false);
+			wrapArrows.addEventListener('click', scrollTo, false);
 
 		} catch(err) {
 			ctx.fillStyle = '#000';

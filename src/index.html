@@ -22,7 +22,25 @@
 <body>
 	<div class="container">
 		<p>Use your mouse or finger (if you have a touch device) control the blur photo.</p>
-		<canvas id="canvas" class="canvas"></canvas>
+		<div class="canvas-wrap">
+			<div class="canvas-inner">
+				<canvas id="canvas" class="canvas"></canvas>
+			</div>
+			<ul class="list-arrow">
+				<li>
+					<a href="#" id="left" class="scrollto">Right</a>
+				</li>
+				<li>
+					<a href="#" id="right" class="scrollto">Left</a>
+				</li>
+				<li>
+					<a href="#" id="bottom" class="scrollto">Bottom</a>
+				</li>
+				<li>
+					<a href="#" id="top" class="scrollto">Top</a>
+				</li>
+			</ul>
+		</div>
 		<ul class="btn-list">
 			<!-- <li class="btn-item">
 				<label>
