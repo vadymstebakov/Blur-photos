@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', function() {
 		const rect = {};
 		let drag = false;
 		let img = null;
-		let src = '../img/чек-mini.jpg';
+		let src = 'img/чек-mini.jpg';
 		let imgData, filteredImage, rw, rh;
 
 		ctx.textAlign = 'center';
